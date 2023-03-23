@@ -17,11 +17,12 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>
 #
-# $Id: package.ps1 245 2023-03-23 00:19:28Z rhubarb-geek-nz $
+# $Id: package.ps1 246 2023-03-23 05:48:34Z rhubarb-geek-nz $
 #
 
 $NUGET_VERSION = "6.4.0"
 $URL = "https://dist.nuget.org/win-x86-commandline/v$NUGET_VERSION/nuget.exe"
+$SHA256 = "26730829B240581A3E6A4E276B9ACE088930032DF0C680D5591BECCF6452374E"
 
 $ErrorActionPreference = "Stop"
 $ProgressPreference = "SilentlyContinue"
@@ -36,6 +37,11 @@ If(!(test-path "nuget.exe"))
 	Write-Host "$URL"
 
 	Invoke-WebRequest -Uri "$URL" -OutFile "nuget.exe"
+}
+
+if ((Get-FileHash -LiteralPath 'nuget.exe' -Algorithm "SHA256").Hash -ne $SHA256)
+{
+	throw "SHA256 mismatch for nuget.exe"
 }
 
 @'
