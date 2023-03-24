@@ -17,12 +17,12 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>
 #
-# $Id: package.ps1 246 2023-03-23 05:48:34Z rhubarb-geek-nz $
+# $Id: package.ps1 247 2023-03-24 00:39:16Z rhubarb-geek-nz $
 #
 
-$NUGET_VERSION = "6.4.0"
+$NUGET_VERSION = "6.5.0"
 $URL = "https://dist.nuget.org/win-x86-commandline/v$NUGET_VERSION/nuget.exe"
-$SHA256 = "26730829B240581A3E6A4E276B9ACE088930032DF0C680D5591BECCF6452374E"
+$SHA256 = "D5FCE5185DE92B7356EA9264B997A620E35C6F6C3C061E471E0DC3A84B3D74FD"
 
 $ErrorActionPreference = "Stop"
 $ProgressPreference = "SilentlyContinue"
@@ -47,14 +47,14 @@ if ((Get-FileHash -LiteralPath 'nuget.exe' -Algorithm "SHA256").Hash -ne $SHA256
 @'
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-  <Product Id="*" Name="NuGet" Language="1033" Version="6.4.0.123" Manufacturer="Microsoft Corporation" UpgradeCode="057FE491-FBF5-4985-A36F-245821C978CF">
-    <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" Platform="x86" Description="NuGet 6.4.0" Comments="NuGet 6.4.0" />
+  <Product Id="*" Name="NuGet" Language="1033" Version="6.5.0.154" Manufacturer="Microsoft Corporation" UpgradeCode="057FE491-FBF5-4985-A36F-245821C978CF">
+    <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" Platform="x86" Description="NuGet 6.5.0" Comments="NuGet 6.5.0" />
     <MediaTemplate EmbedCab="yes" />
     <Feature Id="ProductFeature" Title="setup" Level="1">
       <ComponentGroupRef Id="ProductComponents" />
     </Feature>
     <Upgrade Id="{057FE491-FBF5-4985-A36F-245821C978CF}">
-      <UpgradeVersion Maximum="6.4.0.123" Property="OLDPRODUCTFOUND" OnlyDetect="no" IncludeMinimum="yes" IncludeMaximum="no" />
+      <UpgradeVersion Maximum="6.5.0.154" Property="OLDPRODUCTFOUND" OnlyDetect="no" IncludeMinimum="yes" IncludeMaximum="no" />
     </Upgrade>
     <InstallExecuteSequence>
       <RemoveExistingProducts After="InstallInitialize" />
