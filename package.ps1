@@ -17,12 +17,12 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>
 #
-# $Id: package.ps1 247 2023-03-24 00:39:16Z rhubarb-geek-nz $
+# $Id: package.ps1 278 2023-12-08 04:10:21Z rhubarb-geek-nz $
 #
 
-$NUGET_VERSION = "6.5.0"
+$NUGET_VERSION = "6.8.0"
 $URL = "https://dist.nuget.org/win-x86-commandline/v$NUGET_VERSION/nuget.exe"
-$SHA256 = "D5FCE5185DE92B7356EA9264B997A620E35C6F6C3C061E471E0DC3A84B3D74FD"
+$SHA256 = "6C9E1B09F06971933B08080E7272A2CA5B0D8222500744DA757BD8D019013A3D"
 
 $ErrorActionPreference = "Stop"
 $ProgressPreference = "SilentlyContinue"
@@ -47,14 +47,14 @@ if ((Get-FileHash -LiteralPath 'nuget.exe' -Algorithm "SHA256").Hash -ne $SHA256
 @'
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-  <Product Id="*" Name="NuGet" Language="1033" Version="6.5.0.154" Manufacturer="Microsoft Corporation" UpgradeCode="057FE491-FBF5-4985-A36F-245821C978CF">
-    <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" Platform="x86" Description="NuGet 6.5.0" Comments="NuGet 6.5.0" />
+  <Product Id="*" Name="NuGet" Language="1033" Version="6.8.0.131" Manufacturer="Microsoft Corporation" UpgradeCode="057FE491-FBF5-4985-A36F-245821C978CF">
+    <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" Platform="x86" Description="NuGet 6.8.0" Comments="NuGet 6.8.0" />
     <MediaTemplate EmbedCab="yes" />
     <Feature Id="ProductFeature" Title="setup" Level="1">
       <ComponentGroupRef Id="ProductComponents" />
     </Feature>
     <Upgrade Id="{057FE491-FBF5-4985-A36F-245821C978CF}">
-      <UpgradeVersion Maximum="6.5.0.154" Property="OLDPRODUCTFOUND" OnlyDetect="no" IncludeMinimum="yes" IncludeMaximum="no" />
+      <UpgradeVersion Maximum="6.8.0.131" Property="OLDPRODUCTFOUND" OnlyDetect="no" IncludeMinimum="yes" IncludeMaximum="no" />
     </Upgrade>
     <InstallExecuteSequence>
       <RemoveExistingProducts After="InstallInitialize" />
@@ -98,6 +98,13 @@ If ( $LastExitCode -ne 0 )
 }
 
 & "$ENV:WIX/bin/light.exe" -sw1076 -nologo -cultures:null -out "NuGet-$NUGET_VERSION-win-x86.msi" "NuGet.wixobj" -ext WixUtilExtension
+
+If ( $LastExitCode -ne 0 )
+{
+	Exit $LastExitCode
+}
+
+& signtool sign /a /sha1 601A8B683F791E51F647D34AD102C38DA4DDB65F /fd SHA256 /t http://timestamp.digicert.com "NuGet-$NUGET_VERSION-win-x86.msi"
 
 If ( $LastExitCode -ne 0 )
 {
