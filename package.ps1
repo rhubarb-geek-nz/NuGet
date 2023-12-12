@@ -17,7 +17,7 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>
 #
-# $Id: package.ps1 278 2023-12-08 04:10:21Z rhubarb-geek-nz $
+# $Id: package.ps1 288 2023-12-12 16:46:00Z rhubarb-geek-nz $
 #
 
 $NUGET_VERSION = "6.8.0"
@@ -104,9 +104,11 @@ If ( $LastExitCode -ne 0 )
 	Exit $LastExitCode
 }
 
-& signtool sign /a /sha1 601A8B683F791E51F647D34AD102C38DA4DDB65F /fd SHA256 /t http://timestamp.digicert.com "NuGet-$NUGET_VERSION-win-x86.msi"
+$codeSignCertificate = Get-ChildItem -path Cert:\ -Recurse -CodeSigningCert | Where-Object {$_.Thumbprint -eq '601A8B683F791E51F647D34AD102C38DA4DDB65F'}
 
-If ( $LastExitCode -ne 0 )
+if ( -not $codeSignCertificate )
 {
-	Exit $LastExitCode
+	throw 'Codesign certificate not found'
 }
+
+Set-AuthenticodeSignature -Certificate $codeSignCertificate -TimestampServer 'http://timestamp.digicert.com' -HashAlgorithm SHA256 -FilePath "NuGet-$NUGET_VERSION-win-x86.msi"
