@@ -1,6 +1,6 @@
 #!/usr/bin/env pwsh
 #
-#  Copyright 2023, Roger Brown
+#  Copyright 2024, Roger Brown
 #
 #  This file is part of rhubarb pi.
 #
@@ -17,12 +17,12 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>
 #
-# $Id: package.ps1 288 2023-12-12 16:46:00Z rhubarb-geek-nz $
+# $Id: package.ps1 12667 2024-05-08 06:47:58Z rogerb $
 #
 
-$NUGET_VERSION = "6.8.0"
+$NUGET_VERSION = "6.9.1"
 $URL = "https://dist.nuget.org/win-x86-commandline/v$NUGET_VERSION/nuget.exe"
-$SHA256 = "6C9E1B09F06971933B08080E7272A2CA5B0D8222500744DA757BD8D019013A3D"
+$SHA256 = "82BB13E2365E1E5EE7D0975618DCF90B279427DE8A7ECB338B9B78BFC457D51B"
 
 $ErrorActionPreference = "Stop"
 $ProgressPreference = "SilentlyContinue"
@@ -47,14 +47,14 @@ if ((Get-FileHash -LiteralPath 'nuget.exe' -Algorithm "SHA256").Hash -ne $SHA256
 @'
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-  <Product Id="*" Name="NuGet" Language="1033" Version="6.8.0.131" Manufacturer="Microsoft Corporation" UpgradeCode="057FE491-FBF5-4985-A36F-245821C978CF">
-    <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" Platform="x86" Description="NuGet 6.8.0" Comments="NuGet 6.8.0" />
+  <Product Id="*" Name="NuGet" Language="1033" Version="6.9.1.3" Manufacturer="Microsoft Corporation" UpgradeCode="057FE491-FBF5-4985-A36F-245821C978CF">
+    <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" Platform="x86" Description="NuGet 6.9.1" Comments="NuGet 6.9.1" />
     <MediaTemplate EmbedCab="yes" />
     <Feature Id="ProductFeature" Title="setup" Level="1">
       <ComponentGroupRef Id="ProductComponents" />
     </Feature>
     <Upgrade Id="{057FE491-FBF5-4985-A36F-245821C978CF}">
-      <UpgradeVersion Maximum="6.8.0.131" Property="OLDPRODUCTFOUND" OnlyDetect="no" IncludeMinimum="yes" IncludeMaximum="no" />
+      <UpgradeVersion Maximum="6.9.1.3" Property="OLDPRODUCTFOUND" OnlyDetect="no" IncludeMinimum="yes" IncludeMaximum="no" />
     </Upgrade>
     <InstallExecuteSequence>
       <RemoveExistingProducts After="InstallInitialize" />
