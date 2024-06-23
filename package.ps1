@@ -17,12 +17,12 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>
 #
-# $Id: package.ps1 12667 2024-05-08 06:47:58Z rogerb $
+# $Id: package.ps1 13492 2024-06-23 21:43:02Z rogerb $
 #
 
-$NUGET_VERSION = "6.9.1"
+$NUGET_VERSION = "6.10.0"
 $URL = "https://dist.nuget.org/win-x86-commandline/v$NUGET_VERSION/nuget.exe"
-$SHA256 = "82BB13E2365E1E5EE7D0975618DCF90B279427DE8A7ECB338B9B78BFC457D51B"
+$SHA256 = "BAD75B985CEF3B2E52FA6141B207DB25BAFA8724189A420400FCF2787248BF4E"
 
 $ErrorActionPreference = "Stop"
 $ProgressPreference = "SilentlyContinue"
@@ -47,14 +47,14 @@ if ((Get-FileHash -LiteralPath 'nuget.exe' -Algorithm "SHA256").Hash -ne $SHA256
 @'
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-  <Product Id="*" Name="NuGet" Language="1033" Version="6.9.1.3" Manufacturer="Microsoft Corporation" UpgradeCode="057FE491-FBF5-4985-A36F-245821C978CF">
-    <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" Platform="x86" Description="NuGet 6.9.1" Comments="NuGet 6.9.1" />
+  <Product Id="*" Name="NuGet" Language="1033" Version="6.10.0.107" Manufacturer="Microsoft Corporation" UpgradeCode="057FE491-FBF5-4985-A36F-245821C978CF">
+    <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" Platform="x86" Description="NuGet 6.10.0" Comments="NuGet 6.10.0" />
     <MediaTemplate EmbedCab="yes" />
     <Feature Id="ProductFeature" Title="setup" Level="1">
       <ComponentGroupRef Id="ProductComponents" />
     </Feature>
     <Upgrade Id="{057FE491-FBF5-4985-A36F-245821C978CF}">
-      <UpgradeVersion Maximum="6.9.1.3" Property="OLDPRODUCTFOUND" OnlyDetect="no" IncludeMinimum="yes" IncludeMaximum="no" />
+      <UpgradeVersion Maximum="6.10.0.107" Property="OLDPRODUCTFOUND" OnlyDetect="no" IncludeMinimum="yes" IncludeMaximum="no" />
     </Upgrade>
     <InstallExecuteSequence>
       <RemoveExistingProducts After="InstallInitialize" />
